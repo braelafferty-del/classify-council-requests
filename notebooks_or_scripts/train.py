@@ -1,4 +1,5 @@
 import pandas as pd
+from sklearn.model_selection import train_test_split
 
 # Step 1: Load the council service requests.
 df = pd.read_csv(
@@ -43,3 +44,23 @@ print(len(df))
 
 print("\nCategories after cleaning:")
 print(df["category"].value_counts())
+
+
+# Step 5: Choose the input and target.
+X = df["cleaned_text"]  # Text used to make predictions.
+y = df["category"]      # Correct category to learn.
+
+# Step 6: Use 80% for training and 20% for testing.
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    random_state=42,
+    stratify=y
+)
+
+print("\nTraining requests:", len(X_train))
+print("Testing requests:", len(X_test))
+
+print("\nTest categories:")
+print(y_test.value_counts())
