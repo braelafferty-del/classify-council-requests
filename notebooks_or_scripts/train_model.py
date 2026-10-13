@@ -70,3 +70,5 @@ results.head(5).to_csv(
     "../outputs/five_example_predictions.csv",
     index=False
 )
+
+print('\nPredictions saved to ../outputs/*')
