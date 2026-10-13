@@ -1,4 +1,3 @@
-
 import pandas as pd
 
 # Step 1: Load the council service requests.
@@ -19,30 +18,28 @@ print(df["category"].value_counts())
 print("\nMissing values:")
 print(df.isnull().sum())
 
-# OUTPUT First five rows:
-#    request_id                                       request_text category        suburb priority date_reported
-# 0           1  Large pothole outside 21 Colombo Street causin...     road      Sydenham     high    2026-05-01
-# 1           2  Glass and loose gravel left on cycle lane near...     road     Riccarton   medium    2026-05-01
-# 2           3  Traffic light at Moorhouse Avenue not changing...     road  Central City     high    2026-05-02
-# 3           4  Deep crack forming on footpath beside the prim...     road        Hornby   medium    2026-05-02
-# 4           5    Street sign has fallen over after strong winds.     road  New Brighton   medium    2026-05-03
+# Step 3: Clean the request text.
+# Keep the original text and create a cleaned version.
+df["cleaned_text"] = df["request_text"].fillna("")
+df["cleaned_text"] = df["cleaned_text"].str.lower()
 
-# Number of rows and columns:
-# (80, 6)
+# Replace punctuation with spaces, then remove extra whitespace.
+df["cleaned_text"] = df["cleaned_text"].str.replace(
+    r"[^\w\s]", " ", regex=True
+)
+df["cleaned_text"] = df["cleaned_text"].str.split().str.join(" ")
 
-# Requests in each category:
-# category
-# road      20
-# waste     20
-# water     20
-# safety    20
-# Name: count, dtype: int64
+# Remove requests that contain no usable text.
+df = df[df["cleaned_text"] != ""].copy()
 
-# Missing values:
-# request_id       0
-# request_text     0
-# category         0
-# suburb           0
-# priority         0
-# date_reported    0
-# dtype: int64
+# Step 4: Remove repeated request texts.
+print("\nRepeated request texts:")
+print(df.duplicated(subset=["cleaned_text"]).sum())
+
+df = df.drop_duplicates(subset=["cleaned_text"]).copy()
+
+print("\nRows after cleaning:")
+print(len(df))
+
+print("\nCategories after cleaning:")
+print(df["category"].value_counts())
