@@ -2,6 +2,9 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report
+import joblib
+from pathlib import Path
+
 
 train_data = pd.read_csv("../data/processed/train.csv")
 test_data = pd.read_csv("../data/processed/test.csv")
@@ -53,4 +56,18 @@ results = pd.DataFrame({
 
 print("\nFive example predictions:")
 print(results.head(5).to_string(index=False))
+
+Path("../model").mkdir(parents=True, exist_ok=True)
+Path("../outputs").mkdir(parents=True, exist_ok=True)
+
+# Save model 
+joblib.dump(model, "../model/model.joblib")
+joblib.dump(vectoriser, "../model/vectoriser.joblib")
+
+results.to_csv("../outputs/test_predictions.csv", index=False)
+
+results.head(5).to_csv(
+    "../outputs/five_example_predictions.csv",
+    index=False
+)
 
