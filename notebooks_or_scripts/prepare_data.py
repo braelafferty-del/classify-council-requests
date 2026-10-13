@@ -2,77 +2,72 @@ import pandas as pd
 from pathlib import Path
 from sklearn.model_selection import train_test_split
 
-# Step 1: Load the council service requests.
+# Step 1: Load the dataset from the data folder.
 df = pd.read_csv(
     "../data/raw/BCIT601_starter_service_requests_dataset.csv"
 )
 
-# Step 2: Inspect the dataset.
-print("First five rows:")
+# Step 2: Show the first five rows.
 print(df.head())
 
-print("\nNumber of rows and columns:")
-print(df.shape)
+# Step 3: Show the number of rows and columns.
+print("Shape:", df.shape)
 
-print("\nRequests in each category:")
+print("Number of requests by category")
 print(df["category"].value_counts())
 
-print("\nMissing values:")
+print("Missing values before cleaning")
 print(df.isnull().sum())
 
-# Step 3: Clean the request text.
-# Keep the original text and create a cleaned version.
-df["cleaned_text"] = df["request_text"].fillna("")
-df["cleaned_text"] = df["cleaned_text"].str.lower()
-
-# Replace punctuation with spaces, then remove extra whitespace.
-df["cleaned_text"] = df["cleaned_text"].str.replace(
-    r"[^\w\s]", " ", regex=True
-)
+# Clean text by replacing missing text, converting to lowercase and removing extra spaces.
+df["cleaned_text"] = df["request_text"].fillna("unknown request")
+df["cleaned_text"] = df["cleaned_text"].str.lower().str.strip()
 df["cleaned_text"] = df["cleaned_text"].str.split().str.join(" ")
 
-# Remove requests that contain no usable text.
-df = df[df["cleaned_text"] != ""].copy()
-
-# Step 4: Remove repeated request texts.
-print("\nRepeated request texts:")
+print("Duplicate request texts before cleaning:")
 print(df.duplicated(subset=["cleaned_text"]).sum())
 
-df = df.drop_duplicates(subset=["cleaned_text"]).copy()
+# Remove duplicate records.
+df = df.drop_duplicates(subset=["cleaned_text"])
 
-print("\nRows after cleaning:")
-print(len(df))
+print("Missing values after cleaning")
+print(df.isnull().sum())
 
-print("\nCategories after cleaning:")
+print("Duplicate request texts after cleaning:")
+print(df.duplicated(subset=["cleaned_text"]).sum())
+
+print("Rows after cleaning:", len(df))
 print(df["category"].value_counts())
 
-# Step 5: Choose the input and target.
-X = df["cleaned_text"]  # Text used to make predictions.
-y = df["category"]      # Correct category to learn.
+# X holds the features used to make the prediction.
+X = df["cleaned_text"]
+y = df["category"]
 
-# Step 6: Use 80% for training and 20% for testing.
+# test_size=0.2 reserves 20% of the rows for testing (an 80/20
+# split). random_state=42 makes the split reproducible, so everyone
+# who runs this code gets the same training/testing rows.
 X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,
     test_size=0.2,
-    random_state=42,
-    stratify=y
+    random_state=42
 )
 
-print("\nTraining requests:", len(X_train))
-print("Testing requests:", len(X_test))
+print("Training rows:", len(X_train))
+print("Testing rows:", len(X_test))
 
-print("\nTest categories:")
+print("Test categories:")
 print(y_test.value_counts())
 
-
-# Step 7: Create the folder for the prepared data.
 Path("../data/processed").mkdir(parents=True, exist_ok=True)
 
-# Save the complete cleaned dataset.
+# Save a cleaned copy.
 df.to_csv("../data/processed/cleaned_requests.csv", index=False)
 
 train_data = df.loc[X_train.index]
 test_data = df.loc[X_test.index]
+
 train_data.to_csv("../data/processed/train.csv", index=False)
 test_data.to_csv("../data/processed/test.csv", index=False)
+
+print("Prepared data saved.")
