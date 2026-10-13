@@ -1,4 +1,5 @@
 import pandas as pd
+from pathlib import Path
 from sklearn.model_selection import train_test_split
 
 # Step 1: Load the council service requests.
@@ -45,7 +46,6 @@ print(len(df))
 print("\nCategories after cleaning:")
 print(df["category"].value_counts())
 
-
 # Step 5: Choose the input and target.
 X = df["cleaned_text"]  # Text used to make predictions.
 y = df["category"]      # Correct category to learn.
@@ -64,3 +64,15 @@ print("Testing requests:", len(X_test))
 
 print("\nTest categories:")
 print(y_test.value_counts())
+
+
+# Step 7: Create the folder for the prepared data.
+Path("../data/processed").mkdir(parents=True, exist_ok=True)
+
+# Save the complete cleaned dataset.
+df.to_csv("../data/processed/cleaned_requests.csv", index=False)
+
+train_data = df.loc[X_train.index]
+test_data = df.loc[X_test.index]
+train_data.to_csv("../data/processed/train.csv", index=False)
+test_data.to_csv("../data/processed/test.csv", index=False)
