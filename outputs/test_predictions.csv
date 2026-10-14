@@ -1,0 +1,13 @@
+request_text,true_label,predicted_label,confidence
+Green waste bags split open and rubbish has scattered on footpath.,waste,waste,0.383371673093004
+Graffiti on community centre wall has offensive wording.,safety,waste,0.2875089781177812
+Bus shelter glass panel cracked and dangerous.,safety,safety,0.3502098494000332
+Deep crack forming on footpath beside the primary school.,road,waste,0.2717591071960867
+Overhanging branch above the footpath looks unsafe.,safety,safety,0.3541875211197496
+Standing water near play area may be a health risk.,water,water,0.3813905373385944
+Mud and water pooling across the shared path after every shower.,water,water,0.362686041384988
+Dumped household items have been left beside the reserve fence.,waste,waste,0.35454418229632906
+Blocked culvert causing water to back up along the roadside.,water,water,0.3803768561170412
+Overflowing bin near bus stop is attracting birds and mess.,waste,waste,0.28042961036587466
+Footpath surface has lifted and is becoming uneven.,road,water,0.32365637857079843
+Stormwater grate is loose and making loud noise when buses pass.,road,road,0.28942557128949176
