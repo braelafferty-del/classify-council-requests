@@ -18,22 +18,32 @@ def health():
 def categories():
     return {"categories": model.classes_.tolist()}
 
-# /Predict Route - Uses the model thats already compiled and predicts based on the text given
-# Used by in app ?text=
-@app.route("/predict", methods=["GET"])
-def predict_from_browser():
-    text = request.args.get("text", "")
+
+@app.route("/predict", methods=["POST"])
+def predict():
+    data = request.get_json(silent=True)
+    # If no data is sent
+    if data is None:
+        return {"error": "Please send valid JSON."}, 400
+    if not isinstance(data, dict):
+        return {
+            "error": 'Send a JSON object like {"request_text": "missed rubbish collection"}.'
+        }, 400
+    text = data.get("request_text")
+    # If request_text is empty error catch 
+    if not isinstance(text, str) or text.strip() == "":
+        return {"error": "request_text must contain some text."}, 400
+    
+
     text = " ".join(text.lower().split())
-
-    if text == "":
-        return {"error": "use predict/?text=text-goes-here"}, 400
-
+    # Put the cleaned text to numbers TF-IDF
     features = vectoriser.transform([text])
-
+    
+    # Uses the model and use predict / predict_proba based on the numbers 
     predictions = model.predict(features)
     probabilities = model.predict_proba(features)
     confidence = probabilities.max(axis=1)
-
+    # Returns back to user 
     return {
         "request_text": text,
         "predicted_category": str(predictions[0]),
