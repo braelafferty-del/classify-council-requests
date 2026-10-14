@@ -1,9 +1,15 @@
 # Council Service Requests
 
-A project that uses TF-IDF and Logistic Regression to classify council service requests into the road, waste, water and safety categories.
+A project that uses TF-IDF and Logistic Regression to classify council service requests into categories.
 
 ## Features
-- 
+- Cleans requests to text and removes duplicates
+- Splits the dataset to a 80/20 training and testing split
+- Converts text into numerical features using TF-IDF
+- Classifies requests as road, waste, water and safety.
+- Saves the model
+- Has a flask API with /health /categories /predict
+- /predict catcher if request_text is missing or has invalid input.
 ## Requirements
 
 - Python 3.13( May work on lower versions but tested on 3.13)
