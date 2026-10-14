@@ -4,15 +4,13 @@ A project that uses TF-IDF and Logistic Regression to classify council service r
 
 ## Requirements
 
-- Python 3
-- pip
-- Git
+- Python 3.13( May work on lower versions but tested on 3.13)
 
 ## Setup
 
 Clone the repository and install the required packages:
 
-```powershell
+```
 git clone https://github.com/braelafferty-del/council-service-requests.git
 cd council-service-requests
 python3 -m pip install -r requirements.txt
@@ -31,8 +29,6 @@ python3 notebooks_or_scripts/prepare_data.py
 This cleans the request text, removes duplicates and saves the cleaned dataset and training/testing split in `data/processed`.
 
 ### Train Model
-
-From the same scripts folder, run:
 
 ```
 python3 notebooks_or_scripts/train_model.py
