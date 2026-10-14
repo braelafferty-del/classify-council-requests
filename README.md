@@ -10,10 +10,6 @@ A project that uses TF-IDF and Logistic Regression to classify council service r
 - Saves the model
 - Has a flask API with /health /categories /predict
 - /predict catcher if request_text is missing or has invalid input.
-## Requirements
-
-- Python 3.13( May work on lower versions but tested on 3.13)
-
 ## Setup
 
 Clone the repository and install the required packages:
