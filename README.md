@@ -11,9 +11,6 @@ A project that uses TF-IDF and Logistic Regression to classify council service r
 - Has a flask API with /health /categories /predict
 - /predict catcher if request_text is missing or has invalid input.
 ## Setup
-
-Clone the repository and install the required packages:
-
 ```
 git clone https://github.com/braelafferty-del/council-service-requests.git
 cd council-service-requests
