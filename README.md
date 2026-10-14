@@ -33,6 +33,13 @@ start Flask:
 ```
 python3 api/app.py
 ```
+### Send a JSON object to `/predict`:
+
+```json
+{
+  "request_text": "Missed rubbish collection outside my house"
+}
+```
 
 ### Prepare Data
 
@@ -55,18 +62,3 @@ This trains the classifier, prints accuracy and a classification report based on
 
 
 
-Send a JSON object to `/predict`:
-
-```json
-{
-  "request_text": "Missed rubbish collection outside my house"
-}
-```
-
-### Test a Prediction
-
-Open a PowerShell terminal and run:
-
-```
-'{"request_text":"Missed rubbish collection outside my house"}' | curl.exe -X POST http://127.0.0.1:5000/predict -H "Content-Type: application/json" --data-binary "@-"
-```
