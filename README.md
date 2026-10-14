@@ -35,8 +35,7 @@ python3 api/app.py
 ```
 ### Send a JSON object to `/predict`:
 
-```
-json
+```json
 {
   "request_text": "Missed rubbish collection outside my house"
 }
