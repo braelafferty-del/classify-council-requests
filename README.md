@@ -12,8 +12,8 @@ A project that uses TF-IDF and Logistic Regression to classify council service r
 - /predict catcher if request_text is missing or has invalid input.
 ## Setup
 ```
-git clone https://github.com/braelafferty-del/council-service-requests.git
-cd council-service-requests
+git clone https://github.com/braelafferty/classify-council-requests.git
+cd classify-council-requests
 python3 -m pip install -r requirements.txt
 ```
 ### API Endpoints
