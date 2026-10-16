@@ -31,7 +31,8 @@ python3 -m pip install -r requirements.txt
 start Flask:
 
 ```
-python3 api/app.py
+cd api
+python3 app.py
 ```
 ### Send a JSON object to `/predict`:
 
@@ -46,7 +47,8 @@ python3 api/app.py
 Run the preparation script:
 
 ```
-python3 notebooks_or_scripts/prepare_data.py
+cd notebooks_or_scripts
+python3 prepare_data.py
 ```
 
 This cleans the request text, removes duplicates and saves the cleaned dataset and the 80/20 training/testing split in `data/processed`.
@@ -54,7 +56,8 @@ This cleans the request text, removes duplicates and saves the cleaned dataset a
 ### Train Model
 
 ```
-python3 notebooks_or_scripts/train_model.py
+cd notebooks_or_scripts
+python3 train_model.py
 ```
 
 This trains the classifier, prints accuracy and a classification report based on the data given and saves the model, vectoriser and example predictions.
